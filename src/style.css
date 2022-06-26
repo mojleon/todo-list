@@ -1,0 +1,117 @@
+:root {
+  --padding: 20px;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+button {
+  text-align: left;
+  padding: 14px 16px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+button svg path {
+  fill: #333;
+}
+
+button > img {
+  width: 20px;
+}
+
+button:hover {
+  background-color: #ddd;
+}
+
+li {
+  list-style: none;
+}
+
+nav {
+  display: flex;
+  height: 70px;
+  box-shadow: #333 0px 0px 10px;
+  gap: 35px;
+  background-color: #333;
+  color: #fff;
+  padding: calc(var(--padding) * 2);
+  z-index: 10;
+}
+
+.container {
+  z-index: 6;
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  min-height: calc(100vh - 240px);
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  height: 100%;
+  padding: var(--padding);
+  background-color: #f2f2f2;
+}
+
+.tasks {
+  padding: var(--padding);
+}
+
+footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  margin-top: auto;
+  height: 50px;
+}
+
+.add-input input {
+  padding: 20px;
+  width: calc(100% - 45px);
+}
+
+.add-input .flex-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.task {
+  margin: 16px 0;
+  display: flex;
+  align-items: center;
+}
+
+.task input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.task input[type="date"] {
+  margin-right: 0;
+  margin-left: auto;
+}
+
+.disabled,
+.disabled:hover,
+.disabled svg path {
+  fill: #aaa;
+  color: #aaa;
+  background-color: #eee;
+}
+
+.content {
+  padding-inline-start: 0;
+}
