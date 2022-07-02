@@ -1,9 +1,9 @@
 // import _ from "lodash";
-// import "./style.css";
+import "./style.css";
 
-import { setup } from "@/src/setup";
-import { eventListeners } from "@/src/eventListeners";
-import { storage } from "@/src/storage";
+import { setup } from "./setup";
+import { eventListeners } from "./eventListeners";
+import { storage } from "./storage";
 
 // function component() {
 //   const element = document.createElement("div");
