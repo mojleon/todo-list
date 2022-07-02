@@ -28,6 +28,7 @@ export class setup {
       <li><button data-type='this_week'><img src='../assets/icons/calendar-week.svg'> THIS WEEK</button></li>
       <h2>PROJECTS</h2>
       <div class="projects">
+        <ul class='project-content'></ul>
         <button data-type='add-project-input'><img src='../assets/icons/plus-small.svg'> ADD PROJECT</button>
       </div>
       `;

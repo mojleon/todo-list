@@ -46,8 +46,8 @@ export class eventListeners {
     button.addEventListener("click", (e) => {
       e.stopImmediatePropagation();
       const value = document.querySelector(".input").value;
-      if (type === "add_task") this.storage.addList(value, type);
-      if (type === "cancel_adding_task") this.enableButton();
+      if (type.includes("add")) this.storage.addList(value, type);
+      if (type.includes("cancel")) this.enableButton();
     });
   }
 

@@ -64,14 +64,13 @@ nav {
   z-index: 6;
   display: grid;
   grid-template-columns: 1fr 4fr;
-  min-height: calc(100vh - 240px);
+  min-height: calc(100vh - 200px);
 }
 
 .sidebar {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  height: 100%;
   padding: 20px;
   background-color: #f2f2f2;
 }
@@ -123,4 +122,8 @@ footer {
 
 .content {
   padding-inline-start: 0;
+}
+
+.project-content {
+  padding: 0;
 }

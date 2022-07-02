@@ -3,50 +3,55 @@ export class storage {
   constructor() {}
 
   addList(value, type) {
+    const updateType = type === "add_task" ? "task_" : "project_";
     console.log(value, type);
-    localStorage.setItem(`task_${localStorage.getItem("taskNumber")}`, value);
-    this.incrementListNumber();
-    this.updateTasks(value);
+    localStorage.setItem(
+      `${updateType}${localStorage.getItem(
+        `${updateType.slice(0, -1)}Number`
+      )}`,
+      value
+    );
+    this.incrementListNumber(type);
+    this.updateList(type);
   }
 
-  incrementListNumber() {
-    let taskNumber =
-      localStorage.getItem("taskNumber") !== null
-        ? parseInt(localStorage.getItem("taskNumber"))
+  incrementListNumber(type) {
+    const number = type === "add_task" ? "taskNumber" : "projectNumber";
+    let incrementNumber =
+      localStorage.getItem(number) !== null
+        ? parseInt(localStorage.getItem(number))
         : 0;
-    taskNumber += 1;
-    localStorage.setItem("taskNumber", taskNumber);
+    incrementNumber += 1;
+    localStorage.setItem(number, incrementNumber);
   }
 
-  updateTasks(value) {
+  updateList(type) {
+    console.log(localStorage);
+    const updateType = type === "add_task" ? "task_" : "project_";
     let storageKeys = Object.keys(localStorage).filter((e) =>
-      e.includes("task_")
+      e.includes(updateType)
     );
 
     const eventListenersClass = new eventListeners();
 
-    const content = document.querySelector(".content");
+    const content =
+      type === "add_task"
+        ? document.querySelector(".content")
+        : document.querySelector(".project-content");
 
     for (let i = 0; i <= storageKeys.length; i++) {
-      if (document.querySelector("#task_" + i)) continue;
+      if (document.querySelector(`#${updateType}${i}`)) continue;
       const index = i == 0 ? "null" : i;
-      this.appendTask(
-        "task_" + i,
-        localStorage.getItem("task_" + index),
+      this.appendList(
+        updateType + i,
+        localStorage.getItem(updateType + index),
         content,
         eventListenersClass
       );
     }
-    // const content = document.querySelector(".content");
-    // const element = document.createElement("li");
-    // element.innerHTML = task;
-    // content.append(element);
   }
 
-  appendTask(id, task, content, eventListeners) {
-    if (task === null) return;
-    let element = document.createElement("li");
-
+  appendTask(id, task, element, eventListeners, content) {
     const checkbox = this.createCheckbox(id, eventListeners);
     const date = this.createDate(id, eventListeners);
     const paragraph = this.createParagraph(id, task);
@@ -58,6 +63,23 @@ export class storage {
     element.appendChild(date);
 
     content.append(element);
+  }
+
+  appendProject(id, task, element, content) {
+    const paragraph = this.createParagraph(id, task);
+    const icon = this.createIcon(id);
+    element.classList.add("project");
+    element.appendChild(icon);
+    element.appendChild(paragraph);
+    content.append(element);
+  }
+
+  appendList(id, task, content, eventListeners) {
+    if (task === null) return;
+    let element = document.createElement("li");
+    if (id.includes("task"))
+      return this.appendTask(id, task, element, eventListeners, content);
+    this.appendProject(id, task, element, content);
   }
 
   createCheckbox(id, eventListeners) {
@@ -82,5 +104,12 @@ export class storage {
     label.innerHTML = task;
     label.setAttribute("for", id + "_checkbox");
     return label;
+  }
+
+  createIcon(id) {
+    const icon = document.createElement("img");
+    icon.src = "../assets/icons/project.svg";
+    icon.setAttribute("id", id + "_icon");
+    return icon;
   }
 }
