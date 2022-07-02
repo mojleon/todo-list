@@ -1,15 +1,18 @@
-import { setup } from "./setup";
-import { eventListeners } from "./eventListeners";
-import { storage } from "./storage";
+// import _ from "lodash";
+// import "./style.css";
 
-function component() {
-  const element = document.createElement("div");
+import { setup } from "@/src/setup";
+import { eventListeners } from "@/src/eventListeners";
+import { storage } from "@/src/storage";
 
-  // Lodash, currently included via a script, is required for this line to work
-  element.innerHTML = _.join(["Hello", "webpack"], " ");
+// function component() {
+//   const element = document.createElement("div");
 
-  return element;
-}
+//   // Lodash, currently included via a script, is required for this line to work
+//   element.innerHTML = _.join(["Hello", "webpack"], " ");
+
+//   return element;
+// }
 
 // document.body.appendChild(component());
 

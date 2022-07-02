@@ -1,4 +1,3 @@
-import { container } from "webpack";
 import { storage } from "./storage";
 
 export class eventListeners {

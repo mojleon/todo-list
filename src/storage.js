@@ -1,5 +1,4 @@
 import { eventListeners } from "./eventListeners";
-
 export class storage {
   constructor() {}
 
