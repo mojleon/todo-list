@@ -103,6 +103,13 @@ footer {
   align-items: center;
 }
 
+.project {
+  /* display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px; */
+}
+
 .task input[type="checkbox"] {
   margin-right: 10px;
 }

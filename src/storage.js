@@ -68,9 +68,11 @@ export class storage {
   appendProject(id, task, element, content) {
     const paragraph = this.createParagraph(id, task);
     const icon = this.createIcon(id);
+    const button = this.createButton(id);
     element.classList.add("project");
-    element.appendChild(icon);
-    element.appendChild(paragraph);
+    button.appendChild(icon);
+    button.appendChild(paragraph);
+    element.appendChild(button);
     content.append(element);
   }
 
@@ -111,5 +113,11 @@ export class storage {
     icon.src = "../assets/icons/project.svg";
     icon.setAttribute("id", id + "_icon");
     return icon;
+  }
+
+  createButton(id) {
+    const button = document.createElement("button");
+    button.setAttribute("id", id + "_button");
+    return button;
   }
 }
