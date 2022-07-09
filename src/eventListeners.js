@@ -19,6 +19,12 @@ export class eventListeners {
       button.addEventListener("click", (e) => {
         e.stopImmediatePropagation();
 
+        if (
+          !e.target.dataset.type.includes("add") &&
+          !e.target.dataset.type.includes("cancel")
+        )
+          localStorage.setItem("projectTimeType", e.target.dataset.type);
+
         if (e.target.dataset.type.includes("input"))
           this.showInput(e.target.dataset.type);
       });
@@ -47,20 +53,19 @@ export class eventListeners {
       e.stopImmediatePropagation();
       const value = document.querySelector(".input").value;
       if (type.includes("add")) this.storage.addList(value, type);
-      if (type.includes("cancel")) this.enableButton();
+      if (type.includes("cancel")) this.disableAddInputs();
     });
   }
 
-  enableButton() {
+  disableAddInputs() {
+    localStorage.clear();
+
     this.visibleInput = false;
 
-    console.log(document.querySelector(".add-input"));
-    // document.querySelector(`.add-input`).remove();
-    // document
-    //   .querySelector(`button[data-type='add-input']`)
-    //   .classList.remove("disabled");
-
-    localStorage.clear();
+    document.querySelector(`.add-input`).remove();
+    document
+      .querySelector(`button[data-type='add-input']`)
+      .classList.remove("disabled");
   }
 
   showTaskInput() {

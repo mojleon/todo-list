@@ -53,4 +53,11 @@ export class setup {
     footer.innerHTML = "<p>Footer</p>";
     this.body.appendChild(footer);
   }
+
+  defaultLocalStorage() {
+    if (localStorage.getItem("taskNumber") === null)
+      localStorage.setItem("taskNumber", 0);
+    if (localStorage.getItem("projectTimeType") === null)
+      localStorage.setItem("projectTimeType", "inbox");
+  }
 }

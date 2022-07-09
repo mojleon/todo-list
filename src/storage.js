@@ -4,11 +4,10 @@ export class storage {
 
   addList(value, type) {
     const updateType = type === "add_task" ? "task_" : "project_";
-    console.log(value, type);
     localStorage.setItem(
       `${updateType}${localStorage.getItem(
         `${updateType.slice(0, -1)}Number`
-      )}`,
+      )}_${localStorage.getItem("projectTimeType")}`,
       value
     );
     this.incrementListNumber(type);
@@ -41,14 +40,23 @@ export class storage {
 
     for (let i = 0; i <= storageKeys.length; i++) {
       if (document.querySelector(`#${updateType}${i}`)) continue;
-      const index = i == 0 ? "null" : i;
       this.appendList(
         updateType + i,
-        localStorage.getItem(updateType + index),
+        localStorage.getItem(
+          updateType + i + "_" + localStorage.getItem("projectTimeType")
+        ),
         content,
         eventListenersClass
       );
     }
+  }
+
+  appendList(id, task, content, eventListeners) {
+    if (task === null) return;
+    let element = document.createElement("li");
+    if (id.includes("task"))
+      return this.appendTask(id, task, element, eventListeners, content);
+    this.appendProject(id, task, element, content);
   }
 
   appendTask(id, task, element, eventListeners, content) {
@@ -69,19 +77,14 @@ export class storage {
     const paragraph = this.createParagraph(id, task);
     const icon = this.createIcon(id);
     const button = this.createButton(id);
-    element.classList.add("project");
+
     button.appendChild(icon);
     button.appendChild(paragraph);
-    element.appendChild(button);
-    content.append(element);
-  }
 
-  appendList(id, task, content, eventListeners) {
-    if (task === null) return;
-    let element = document.createElement("li");
-    if (id.includes("task"))
-      return this.appendTask(id, task, element, eventListeners, content);
-    this.appendProject(id, task, element, content);
+    element.id = id;
+    element.appendChild(button);
+
+    content.append(element);
   }
 
   createCheckbox(id, eventListeners) {

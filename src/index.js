@@ -16,3 +16,6 @@ eListeners.domButtons();
 const localStorage = new storage();
 localStorage.updateList("add_task");
 localStorage.updateList("add_project");
+
+let defaultSetup = new setup();
+defaultSetup.defaultLocalStorage();
