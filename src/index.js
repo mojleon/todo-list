@@ -9,6 +9,7 @@ let pageBuilder = new setup();
 
 pageBuilder.navbar();
 pageBuilder.createContent();
+pageBuilder.defaultLocalStorage();
 
 let eListeners = new eventListeners();
 eListeners.domButtons();
@@ -16,6 +17,3 @@ eListeners.domButtons();
 const localStorage = new storage();
 localStorage.updateList("add_task");
 localStorage.updateList("add_project");
-
-let defaultSetup = new setup();
-defaultSetup.defaultLocalStorage();

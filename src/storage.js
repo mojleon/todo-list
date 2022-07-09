@@ -2,6 +2,13 @@ import { eventListeners } from "./eventListeners";
 export class storage {
   constructor() {}
 
+  clearTaskList() {
+    const content = document.querySelector(".content");
+    while (content.firstChild) {
+      content.removeChild(content.firstChild);
+    }
+  }
+
   addList(value, type) {
     const updateType = type === "add_task" ? "task_" : "project_";
     localStorage.setItem(
@@ -25,7 +32,6 @@ export class storage {
   }
 
   updateList(type) {
-    console.log(localStorage);
     const updateType = type === "add_task" ? "task_" : "project_";
     let storageKeys = Object.keys(localStorage).filter((e) =>
       e.includes(updateType)
@@ -39,9 +45,14 @@ export class storage {
         : document.querySelector(".project-content");
 
     for (let i = 0; i <= storageKeys.length; i++) {
-      if (document.querySelector(`#${updateType}${i}`)) continue;
+      if (
+        document.querySelector(`#${updateType}${i}`) ||
+        typeof storageKeys[i] === "undefined"
+      )
+        continue;
+
       this.appendList(
-        updateType + i,
+        storageKeys[i],
         localStorage.getItem(
           updateType + i + "_" + localStorage.getItem("projectTimeType")
         ),
@@ -52,7 +63,9 @@ export class storage {
   }
 
   appendList(id, task, content, eventListeners) {
-    if (task === null) return;
+    if (task === null && !id.includes(localStorage.getItem("projectTimeType")))
+      return;
+
     let element = document.createElement("li");
     if (id.includes("task"))
       return this.appendTask(id, task, element, eventListeners, content);

@@ -3,7 +3,7 @@ import { storage } from "./storage";
 export class eventListeners {
   constructor() {
     this.buttons = document.querySelectorAll("button");
-    this.storage = new storage();
+    this.store = new storage();
     this.visibleInput = false;
   }
 
@@ -22,8 +22,11 @@ export class eventListeners {
         if (
           !e.target.dataset.type.includes("add") &&
           !e.target.dataset.type.includes("cancel")
-        )
+        ) {
           localStorage.setItem("projectTimeType", e.target.dataset.type);
+          this.store.clearTaskList();
+          this.store.updateList("add_task");
+        }
 
         if (e.target.dataset.type.includes("input"))
           this.showInput(e.target.dataset.type);
@@ -52,7 +55,7 @@ export class eventListeners {
     button.addEventListener("click", (e) => {
       e.stopImmediatePropagation();
       const value = document.querySelector(".input").value;
-      if (type.includes("add")) this.storage.addList(value, type);
+      if (type.includes("add")) this.store.addList(value, type);
       if (type.includes("cancel")) this.disableAddInputs();
     });
   }
