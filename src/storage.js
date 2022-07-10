@@ -57,25 +57,33 @@ export class storage {
       if (
         document.querySelector(
           `#` + updateType + i + "_" + localStorage.getItem("projectTimeType")
-        )
+        ) ||
+        document.querySelector(`#` + updateType + i)
       )
         continue;
 
-      this.appendList(
-        updateType + i + "_" + localStorage.getItem("projectTimeType"),
-        localStorage.getItem(
-          updateType + i + "_" + localStorage.getItem("projectTimeType")
-        ),
-        content,
-        eventListenersClass
-      );
+      if (type === "add_task")
+        this.appendList(
+          updateType + i + "_" + localStorage.getItem("projectTimeType"),
+          localStorage.getItem(
+            updateType + i + "_" + localStorage.getItem("projectTimeType")
+          ),
+          content,
+          eventListenersClass
+        );
+      else
+        this.appendList(
+          updateType + i,
+          localStorage.getItem(updateType + i),
+          content,
+          eventListenersClass
+        );
     }
   }
 
   appendList(id, task, content, eventListeners) {
     console.log(id, task);
-    if (task === null || !id.includes(localStorage.getItem("projectTimeType")))
-      return;
+    if (task === null) return;
 
     let element = document.createElement("li");
     if (id.includes("task"))
