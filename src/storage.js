@@ -11,12 +11,21 @@ export class storage {
 
   addList(value, type) {
     const updateType = type === "add_task" ? "task_" : "project_";
-    localStorage.setItem(
-      `${updateType}${localStorage.getItem(
-        `${updateType.slice(0, -1)}Number`
-      )}_${localStorage.getItem("projectTimeType")}`,
-      value
-    );
+    if (type === "add_task")
+      localStorage.setItem(
+        `${updateType}${localStorage.getItem(
+          `${updateType.slice(0, -1)}Number`
+        )}_${localStorage.getItem("projectTimeType")}`,
+        value
+      );
+    else
+      localStorage.setItem(
+        `${updateType}${localStorage.getItem(
+          `${updateType.slice(0, -1)}Number`
+        )}`,
+        value
+      );
+
     this.incrementListNumber(type);
     this.updateList(type);
   }
@@ -46,13 +55,14 @@ export class storage {
 
     for (let i = 0; i <= storageKeys.length; i++) {
       if (
-        document.querySelector(`#${updateType}${i}`) ||
-        typeof storageKeys[i] === "undefined"
+        document.querySelector(
+          `#` + updateType + i + "_" + localStorage.getItem("projectTimeType")
+        )
       )
         continue;
 
       this.appendList(
-        storageKeys[i],
+        updateType + i + "_" + localStorage.getItem("projectTimeType"),
         localStorage.getItem(
           updateType + i + "_" + localStorage.getItem("projectTimeType")
         ),
@@ -63,7 +73,8 @@ export class storage {
   }
 
   appendList(id, task, content, eventListeners) {
-    if (task === null && !id.includes(localStorage.getItem("projectTimeType")))
+    console.log(id, task);
+    if (task === null || !id.includes(localStorage.getItem("projectTimeType")))
       return;
 
     let element = document.createElement("li");
@@ -87,6 +98,7 @@ export class storage {
   }
 
   appendProject(id, task, element, content) {
+    console.log("appendProject", id, task, element, content);
     const paragraph = this.createParagraph(id, task);
     const icon = this.createIcon(id);
     const button = this.createButton(id);

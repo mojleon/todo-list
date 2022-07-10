@@ -54,7 +54,9 @@ export class eventListeners {
 
     button.addEventListener("click", (e) => {
       e.stopImmediatePropagation();
-      const value = document.querySelector(".input").value;
+      const value = document
+        .querySelector(`#${e.target.id}`)
+        .parentNode.parentElement.querySelector(".input").value;
       if (type.includes("add")) this.store.addList(value, type);
       if (type.includes("cancel")) this.disableAddInputs();
     });
