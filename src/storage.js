@@ -28,6 +28,11 @@ export class storage {
 
     this.incrementListNumber(type);
     this.updateList(type);
+    const eventListenersClass = new eventListeners();
+
+    eventListenersClass.addProjectEventListener(
+      `${updateType}${localStorage.getItem(`${updateType.slice(0, -1)}Number`)}`
+    );
   }
 
   incrementListNumber(type) {
@@ -82,7 +87,6 @@ export class storage {
   }
 
   appendList(id, task, content, eventListeners) {
-    console.log(id, task);
     if (task === null) return;
 
     let element = document.createElement("li");
@@ -106,7 +110,6 @@ export class storage {
   }
 
   appendProject(id, task, element, content) {
-    console.log("appendProject", id, task, element, content);
     const paragraph = this.createParagraph(id, task);
     const icon = this.createIcon(id);
     const button = this.createButton(id);
