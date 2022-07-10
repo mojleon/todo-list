@@ -31,7 +31,7 @@ export class setup {
         <ul class='project-content'></ul>
         <button data-type='add-project-input'><img src='../assets/icons/plus-small.svg'> ADD PROJECT</button>
       </div>
-      `;
+      <li><button data-type='clear-storage'>CLEAR STORAGE</button></li> `;
     container.appendChild(sideBar);
   }
 

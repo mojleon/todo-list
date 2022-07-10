@@ -14,6 +14,16 @@ export class eventListeners {
     });
   }
 
+  addProjectEventListener(id) {
+    console.log("addProjetEventListener", id);
+    const project = document.querySelector(`#${id}`);
+    project.addEventListener("click", (e) => {
+      e.stopImmediatePropagation();
+      console.log(e.target.value);
+      // this.store.updateList("project_");
+    });
+  }
+
   domButtons() {
     this.buttons.forEach((button) => {
       button.addEventListener("click", (e) => {
@@ -30,6 +40,10 @@ export class eventListeners {
 
         if (e.target.dataset.type.includes("input"))
           this.showInput(e.target.dataset.type);
+
+        if (e.target.dataset.type === "clear-storage") {
+          localStorage.clear();
+        }
       });
     });
   }
@@ -58,18 +72,18 @@ export class eventListeners {
         .querySelector(`#${e.target.id}`)
         .parentNode.parentElement.querySelector(".input").value;
       if (type.includes("add")) this.store.addList(value, type);
-      if (type.includes("cancel")) this.disableAddInputs();
+      if (type.includes("cancel")) this.disableAddInputs(type);
     });
   }
 
-  disableAddInputs() {
+  disableAddInputs(type) {
     localStorage.clear();
 
     this.visibleInput = false;
 
     document.querySelector(`.add-input`).remove();
     document
-      .querySelector(`button[data-type='add-input']`)
+      .querySelector(`button[data-type='add-task-input']`)
       .classList.remove("disabled");
   }
 
