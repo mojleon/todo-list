@@ -26,13 +26,13 @@ export class storage {
         value
       );
 
-    this.incrementListNumber(type);
     this.updateList(type);
     const eventListenersClass = new eventListeners();
 
     eventListenersClass.addProjectEventListener(
       `${updateType}${localStorage.getItem(`${updateType.slice(0, -1)}Number`)}`
     );
+    this.incrementListNumber(type);
   }
 
   incrementListNumber(type) {
@@ -110,12 +110,13 @@ export class storage {
   }
 
   appendProject(id, task, element, content) {
-    const paragraph = this.createParagraph(id, task);
     const icon = this.createIcon(id);
     const button = this.createButton(id);
 
     button.appendChild(icon);
-    button.appendChild(paragraph);
+    button.innerHTML += task;
+
+    button.setAttribute("data-type", task);
 
     element.id = id;
     element.appendChild(button);
