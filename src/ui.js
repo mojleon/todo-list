@@ -10,7 +10,7 @@ export class ui {
 
   navbar() {
     const nav = document.createElement("nav");
-    nav.innerHTML = "<img src='../assets/logo.svg'><h1>TO-DO</h1>";
+    nav.innerHTML = "<img src='./assets/logo.svg'><h1>TO-DO</h1>";
     this.body.appendChild(nav);
   }
 
@@ -28,13 +28,13 @@ export class ui {
     const sideBar = document.createElement("div");
     sideBar.classList.add("sidebar");
     sideBar.innerHTML = `<h2>SIDEBAR</h2>
-      <li><button data-type='inbox'><img src='../assets/icons/inbox.svg'> INBOX</button></li>
-      <li><button data-type='today'><img src='../assets/icons/calendar-today.svg'> TODAY</button></li>
-      <li><button data-type='this_week'><img src='../assets/icons/calendar-week.svg'> THIS WEEK</button></li>
+      <li><button data-type='inbox'><img src='./assets/icons/inbox.svg'> INBOX</button></li>
+      <li><button data-type='today'><img src='./assets/icons/calendar-today.svg'> TODAY</button></li>
+      <li><button data-type='this_week'><img src='./assets/icons/calendar-week.svg'> THIS WEEK</button></li>
       <h2>PROJECTS</h2>
       <div class="projects">
         <ul class='project-content'></ul>
-        <button data-type='add-project-input'><img src='../assets/icons/plus-small.svg'> ADD PROJECT</button>
+        <button data-type='add-project-input'><img src='./assets/icons/plus-small.svg'> ADD PROJECT</button>
       </div>
       <li><button data-type='clear-storage'>CLEAR STORAGE</button></li> `;
     container.appendChild(sideBar);
@@ -267,7 +267,7 @@ export class ui {
 
   createIcon(id) {
     const icon = document.createElement("img");
-    icon.src = "../assets/icons/project.svg";
+    icon.src = "./assets/icons/project.svg";
     icon.setAttribute("id", id + "_icon");
     return icon;
   }
