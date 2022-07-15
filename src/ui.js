@@ -198,9 +198,10 @@ export class ui {
         );
     }
 
-    document.querySelector("#header").innerHTML = localStorage
-      .getItem("projectTimeType")
-      .replaceAll(/_/g, " ");
+    if (localStorage.getItem("projectTimeType") !== null)
+      document.querySelector("#header").innerHTML = localStorage
+        .getItem("projectTimeType")
+        .replace("_", " ");
   }
 
   appendList(id, task, content, eventListeners) {
