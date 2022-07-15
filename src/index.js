@@ -9,13 +9,13 @@ import { setup } from "./setup";
 let pageBuilder = new ui();
 pageBuilder.navbar();
 pageBuilder.createContent();
+pageBuilder.updateList("add_task");
+pageBuilder.updateList("add_project");
 
 const defaultSetting = new setup();
 defaultSetting.defaultLocalStorage();
 
 const localStorage = new storage();
-localStorage.updateList("add_task");
-localStorage.updateList("add_project");
 
 let eListeners = new eventListeners();
 eListeners.domButtons();

@@ -43,7 +43,7 @@ export class ui {
   main(container) {
     const main = document.createElement("div");
     main.classList.add("tasks");
-    main.innerHTML = `<h2>Main</h2>
+    main.innerHTML = `<h2 id="header">INBOX</h2>
     <ul class='content'></ul>
     <button data-type='add-task-input'>
     <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -82,18 +82,28 @@ export class ui {
     this.eventListeners.updateList(button, type);
   }
 
-  disableAddInputs() {
-    this.visibleInput = false;
+  disableAddInputs(type) {
+    if (type.includes("task")) this.disableTaskInput();
+    else this.disableProjectInput();
+  }
 
-    document.querySelector(`.add-input`).remove();
+  disableTaskInput() {
+    console.log("disableTaskInput");
+    document.querySelector(`#tasks-input`).remove();
     document
       .querySelector(`button[data-type='add-task-input']`)
       .classList.remove("disabled");
   }
 
+  disableProjectInput() {
+    document.querySelector(`#projects-input`).remove();
+    document
+      .querySelector(`button[data-type='add-project-input']`)
+      .classList.remove("disabled");
+  }
+
   showTaskInput() {
-    if (this.visibleInput) return;
-    this.visibleInput = true;
+    if (document.querySelector("#tasks-input") !== null) return;
 
     document
       .querySelector("button[data-type='add-task-input']")
@@ -101,7 +111,7 @@ export class ui {
 
     const main = document.querySelector(".tasks");
 
-    const container = this.createContainer();
+    const container = this.createContainer("tasks");
 
     main.appendChild(container);
 
@@ -111,8 +121,14 @@ export class ui {
   }
 
   showProjectInput() {
+    if (document.querySelector("#projects-input") !== null) return;
+
+    document
+      .querySelector("button[data-type='add-project-input']")
+      .classList.add("disabled");
+
     const main = document.querySelector(".projects");
-    const container = this.createContainer();
+    const container = this.createContainer("projects");
 
     main.appendChild(container);
 
@@ -134,9 +150,131 @@ export class ui {
     this.addButton(flexButtons, "CANCEL", "red", "cancel_adding_" + type);
   }
 
-  createContainer() {
+  createContainer(type) {
     const container = document.createElement("div");
     container.classList.add("add-input");
+    container.setAttribute("id", type + "-input");
     return container;
+  }
+
+  ///////////////////////////////////////////////////////////////////////////
+  updateList(type) {
+    const updateType = type === "add_task" ? "task_" : "project_";
+    let storageKeys = Object.keys(localStorage).filter((e) =>
+      e.includes(updateType)
+    );
+
+    const eventListenersClass = new eventListeners();
+
+    const content =
+      type === "add_task"
+        ? document.querySelector(".content")
+        : document.querySelector(".project-content");
+
+    for (let i = 0; i <= storageKeys.length; i++) {
+      if (
+        document.querySelector(
+          `#` + updateType + i + "_" + localStorage.getItem("projectTimeType")
+        ) ||
+        document.querySelector(`#` + updateType + i)
+      )
+        continue;
+
+      if (type === "add_task")
+        this.appendList(
+          updateType + i + "_" + localStorage.getItem("projectTimeType"),
+          localStorage.getItem(
+            updateType + i + "_" + localStorage.getItem("projectTimeType")
+          ),
+          content,
+          eventListenersClass
+        );
+      else
+        this.appendList(
+          updateType + i,
+          localStorage.getItem(updateType + i),
+          content,
+          eventListenersClass
+        );
+    }
+
+    document.querySelector("#header").innerHTML = localStorage
+      .getItem("projectTimeType")
+      .replaceAll(/_/g, " ");
+  }
+
+  appendList(id, task, content, eventListeners) {
+    if (task === null) return;
+
+    let element = document.createElement("li");
+    if (id.includes("task"))
+      return this.appendTask(id, task, element, eventListeners, content);
+    this.appendProject(id, task, element, content);
+  }
+
+  appendTask(id, task, element, eventListeners, content) {
+    const checkbox = this.createCheckbox(id, eventListeners);
+    const date = this.createDate(id, eventListeners);
+    const paragraph = this.createParagraph(id, task);
+
+    element.id = id;
+    element.classList.add("task");
+    element.appendChild(checkbox);
+    element.appendChild(paragraph);
+    element.appendChild(date);
+
+    content.append(element);
+  }
+
+  appendProject(id, task, element, content) {
+    const icon = this.createIcon(id);
+    const button = this.createButton(id);
+
+    button.appendChild(icon);
+    button.innerHTML += task;
+
+    button.setAttribute("data-type", task);
+
+    element.id = id;
+    element.appendChild(button);
+
+    content.append(element);
+  }
+
+  createCheckbox(id, eventListeners) {
+    const checkbox = document.createElement("input");
+    checkbox.setAttribute("type", "checkbox");
+    checkbox.setAttribute("id", id + "_checkbox");
+    checkbox.checked = localStorage.getItem(id + "_checkbox") == "true";
+    eventListeners.addEventListenerToElement(id + "_checkbox", checkbox);
+    return checkbox;
+  }
+
+  createDate(id, eventListeners) {
+    const date = document.createElement("input");
+    date.setAttribute("type", "date");
+    date.value = localStorage.getItem(id + "_date");
+    eventListeners.addEventListenerToElement(id + "_date", date);
+    return date;
+  }
+
+  createParagraph(id, task) {
+    const label = document.createElement("label");
+    label.innerHTML = task;
+    label.setAttribute("for", id + "_checkbox");
+    return label;
+  }
+
+  createIcon(id) {
+    const icon = document.createElement("img");
+    icon.src = "../assets/icons/project.svg";
+    icon.setAttribute("id", id + "_icon");
+    return icon;
+  }
+
+  createButton(id) {
+    const button = document.createElement("button");
+    button.setAttribute("id", id + "_button");
+    return button;
   }
 }

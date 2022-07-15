@@ -17,19 +17,16 @@ export class eventListeners {
   addProjectEventListener(id) {
     if (!id.includes("project")) return;
 
-    const project = document.querySelector(`#${id}_button`);
-    project.addEventListener("click", (e) => {
-      e.stopImmediatePropagation();
-      // this.storage.updateList("project_");
+    const project = document.querySelectorAll(`#${id}_button`);
+    project[0].addEventListener("click", (e) => {
+      this.sideBarEventListeners(project);
     });
   }
 
-  domButtons() {
+  sideBarEventListeners(selector) {
     this.ui = new ui();
-    this.buttons = document.querySelectorAll("button");
-
-    this.buttons.forEach((button) => {
-      button.addEventListener("click", (e) => {
+    selector.forEach((select) => {
+      select.addEventListener("click", (e) => {
         e.stopImmediatePropagation();
 
         if (
@@ -38,7 +35,7 @@ export class eventListeners {
         ) {
           localStorage.setItem("projectTimeType", e.target.dataset.type);
           this.storage.clearTaskList();
-          this.storage.updateList("add_task");
+          this.ui.updateList("add_task");
         }
 
         if (e.target.dataset.type.includes("input"))
@@ -51,13 +48,22 @@ export class eventListeners {
     });
   }
 
+  domButtons() {
+    this.ui = new ui();
+
+    this.buttons = document.querySelectorAll("button");
+    this.sideBarEventListeners(this.buttons);
+  }
+
   updateList(button, type) {
+    this.ui = new ui();
+
     button.addEventListener("click", (e) => {
       e.stopImmediatePropagation();
       const value = document
         .querySelector(`#${e.target.id}`)
         .parentNode.parentElement.querySelector(".input").value;
-      if (type.includes("add")) this.storage.addList(value, type);
+      if (type.includes("add_")) this.storage.addList(value, type);
       if (type.includes("cancel")) this.ui.disableAddInputs(type);
     });
   }
