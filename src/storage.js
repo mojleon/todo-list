@@ -1,6 +1,6 @@
-import { eventListeners } from "./eventListeners";
-import { ui } from "./ui";
-export class storage {
+import eventListeners from "./eventListeners";
+import ui from "./ui";
+export default class storage {
   constructor() {}
 
   clearTaskList() {
@@ -12,13 +12,14 @@ export class storage {
 
   addList(value, type) {
     const uiClass = new ui();
+    const date = new Date().toLocaleDateString("en-US");
 
     const updateType = type === "add_task" ? "task_" : "project_";
     if (type === "add_task")
       localStorage.setItem(
         `${updateType}${localStorage.getItem(
           `${updateType.slice(0, -1)}Number`
-        )}_${localStorage.getItem("projectTimeType")}`,
+        )}_${localStorage.getItem("projectTimeType")}_${date}`,
         value
       );
     else

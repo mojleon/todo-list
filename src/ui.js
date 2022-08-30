@@ -1,11 +1,12 @@
-import { storage } from "./storage";
-import { eventListeners } from "./eventListeners";
+import storage from "./storage";
+import eventListeners from "./eventListeners";
 
-export class ui {
+export default class ui {
   constructor() {
     this.body = document.querySelector("body");
     this.storage = new storage();
     this.eventListeners = new eventListeners();
+    this.date = new Date().toLocaleDateString("en-US");
   }
 
   navbar() {
@@ -60,7 +61,6 @@ export class ui {
   }
 
   /////////////////////////////////////////////////////////////////////////////
-
   showInput(inputType) {
     if (inputType === "add-task-input") this.showTaskInput();
     if (inputType === "add-project-input") this.showProjectInput();
@@ -172,19 +172,35 @@ export class ui {
         : document.querySelector(".project-content");
 
     for (let i = 0; i <= storageKeys.length; i++) {
-      if (
-        document.querySelector(
-          `#` + updateType + i + "_" + localStorage.getItem("projectTimeType")
-        ) ||
-        document.querySelector(`#` + updateType + i)
-      )
-        continue;
+      // if (
+      //   document.querySelector(
+      //     `#` +
+      //       updateType +
+      //       i +
+      //       "_" +
+      //       localStorage.getItem("projectTimeType") +
+      //       "_" +
+      //       this.date
+      //   ) ||
+      //   document.querySelector(`#` + updateType + i)
+      // )
+      //   continue;
 
       if (type === "add_task")
         this.appendList(
-          updateType + i + "_" + localStorage.getItem("projectTimeType"),
+          updateType +
+            i +
+            "_" +
+            localStorage.getItem("projectTimeType") +
+            "_" +
+            this.date,
           localStorage.getItem(
-            updateType + i + "_" + localStorage.getItem("projectTimeType")
+            updateType +
+              i +
+              "_" +
+              localStorage.getItem("projectTimeType") +
+              "_" +
+              this.date
           ),
           content,
           eventListenersClass

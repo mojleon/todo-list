@@ -1,4 +1,4 @@
-export class setup {
+export default class setup {
   constructor() {}
 
   defaultLocalStorage() {

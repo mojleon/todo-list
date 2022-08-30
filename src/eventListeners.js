@@ -1,7 +1,7 @@
-import { storage } from "./storage";
-import { ui } from "./ui";
+import storage from "./storage";
+import ui from "./ui";
 
-export class eventListeners {
+export default class eventListeners {
   constructor() {
     this.storage = new storage();
     this.visibleInput = false;
@@ -43,12 +43,13 @@ export class eventListeners {
 
         if (e.target.dataset.type === "clear-storage") {
           localStorage.clear();
+          document.querySelector(".project-content").innerHTML = "";
         }
       });
     });
   }
 
-  domButtons() {
+  activateDomButtons() {
     this.ui = new ui();
 
     this.buttons = document.querySelectorAll("button");

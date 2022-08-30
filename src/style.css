@@ -53,11 +53,12 @@ nav {
   color: #fff;
   padding: calc(20px * 2);
   z-index: 10;
+  align-items: center;
 }
 
-.logo {
-  font-family: "bebas-kai";
-  background: url("./logo.svg");
+nav img {
+  width: 60px;
+  height: 60px;
 }
 
 .container {
