@@ -1,10 +1,12 @@
 import storage from "./storage";
-import ui from "./ui";
+import listClass from "./list";
+import input from "./input";
 
 export default class eventListeners {
   constructor() {
     this.storage = new storage();
     this.visibleInput = false;
+    this.input = new input();
   }
 
   addEventListenerToElement(id, element) {
@@ -24,7 +26,7 @@ export default class eventListeners {
   }
 
   sideBarEventListeners(selector) {
-    this.ui = new ui();
+    this.list = new listClass();
     selector.forEach((select) => {
       select.addEventListener("click", (e) => {
         e.stopImmediatePropagation();
@@ -35,11 +37,11 @@ export default class eventListeners {
         ) {
           localStorage.setItem("projectTimeType", e.target.dataset.type);
           this.storage.clearTaskList();
-          this.ui.updateList("add_task");
+          this.list.updateList("add_task");
         }
 
         if (e.target.dataset.type.includes("input"))
-          this.ui.showInput(e.target.dataset.type);
+          this.input.showInput(e.target.dataset.type);
 
         if (e.target.dataset.type === "clear-storage") {
           localStorage.clear();
@@ -50,22 +52,18 @@ export default class eventListeners {
   }
 
   activateDomButtons() {
-    this.ui = new ui();
-
     this.buttons = document.querySelectorAll("button");
     this.sideBarEventListeners(this.buttons);
   }
 
   updateList(button, type) {
-    this.ui = new ui();
-
     button.addEventListener("click", (e) => {
       e.stopImmediatePropagation();
       const value = document
         .querySelector(`#${e.target.id}`)
         .parentNode.parentElement.querySelector(".input").value;
       if (type.includes("add_")) this.storage.addList(value, type);
-      if (type.includes("cancel")) this.ui.disableAddInputs(type);
+      if (type.includes("cancel")) this.input.disableAddInputs(type);
     });
   }
 }

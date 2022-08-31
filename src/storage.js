@@ -1,5 +1,5 @@
 import eventListeners from "./eventListeners";
-import ui from "./ui";
+import listClass from "./list";
 export default class storage {
   constructor() {}
 
@@ -11,7 +11,7 @@ export default class storage {
   }
 
   addList(value, type) {
-    const uiClass = new ui();
+    const list = new listClass();
     const date = new Date().toLocaleDateString("en-US");
 
     const updateType = type === "add_task" ? "task_" : "project_";
@@ -30,7 +30,7 @@ export default class storage {
         value
       );
 
-    uiClass.updateList(type);
+    list.updateList(type);
     const eventListenersClass = new eventListeners();
 
     eventListenersClass.addProjectEventListener(
