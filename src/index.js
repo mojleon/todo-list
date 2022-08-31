@@ -11,8 +11,8 @@ pageBuilder.navbar();
 pageBuilder.createContent();
 
 let list = new listClass();
-list.updateList("add_task");
-list.updateList("add_project");
+list.updateTaskList();
+list.updateProjectList();
 
 const defaultSetting = new setup();
 defaultSetting.defaultLocalStorage();

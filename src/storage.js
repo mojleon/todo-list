@@ -1,7 +1,9 @@
 import eventListeners from "./eventListeners";
 import listClass from "./list";
 export default class storage {
-  constructor() {}
+  constructor() {
+    this.date = new Date().toLocaleDateString("en-US");
+  }
 
   clearTaskList() {
     const content = document.querySelector(".content");
@@ -12,14 +14,13 @@ export default class storage {
 
   addList(value, type) {
     const list = new listClass();
-    const date = new Date().toLocaleDateString("en-US");
 
     const updateType = type === "add_task" ? "task_" : "project_";
     if (type === "add_task")
       localStorage.setItem(
         `${updateType}${localStorage.getItem(
           `${updateType.slice(0, -1)}Number`
-        )}_${localStorage.getItem("projectTimeType")}_${date}`,
+        )}_${localStorage.getItem("projectTimeType")}_${this.date}`,
         value
       );
     else
@@ -30,7 +31,7 @@ export default class storage {
         value
       );
 
-    list.updateList(type);
+    type.includes("task") ? list.updateTaskList() : list.updateProjectList();
     const eventListenersClass = new eventListeners();
 
     eventListenersClass.addProjectEventListener(

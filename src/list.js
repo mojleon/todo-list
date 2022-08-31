@@ -9,16 +9,19 @@ export default class list {
     this.content = null;
   }
 
-  updateList(type) {
-    const updateType = type === "add_task" ? "task_" : "project_";
+  listHeader() {
+    document.querySelector("#header").innerHTML = localStorage
+      .getItem("projectTimeType")
+      .replace("_", " ");
+  }
+
+  updateTaskList() {
+    const updateType = "task_";
     let storageKeys = Object.keys(localStorage).filter((e) =>
       e.includes(updateType)
     );
 
-    this.content =
-      type === "add_task"
-        ? document.querySelector(".content")
-        : document.querySelector(".project-content");
+    this.content = document.querySelector(".content");
 
     for (let i = 0; i <= storageKeys.length; i++) {
       const id =
@@ -28,6 +31,7 @@ export default class list {
         localStorage.getItem("projectTimeType") +
         "_" +
         this.date;
+
       if (
         document.getElementById(id) ||
         document.querySelector(`#` + updateType + i)
@@ -35,15 +39,39 @@ export default class list {
         continue;
 
       const value = localStorage.getItem(id);
-      if (type === "add_task") this.appendList(id, value);
-      else
-        this.appendList(updateType + i, localStorage.getItem(updateType + i));
+      this.appendList(id, value);
     }
 
-    if (localStorage.getItem("projectTimeType") !== null)
-      document.querySelector("#header").innerHTML = localStorage
-        .getItem("projectTimeType")
-        .replace("_", " ");
+    if (localStorage.getItem("projectTimeType") !== null) this.listHeader();
+  }
+
+  updateProjectList() {
+    const updateType = "project_";
+    let storageKeys = Object.keys(localStorage).filter((e) =>
+      e.includes(updateType)
+    );
+
+    this.content = document.querySelector(".project-content");
+
+    for (let i = 0; i <= storageKeys.length; i++) {
+      const id =
+        updateType +
+        i +
+        "_" +
+        localStorage.getItem("projectTimeType") +
+        "_" +
+        this.date;
+
+      if (
+        document.getElementById(id) ||
+        document.querySelector(`#` + updateType + i)
+      )
+        continue;
+
+      this.appendList(updateType + i, localStorage.getItem(updateType + i));
+    }
+
+    if (localStorage.getItem("projectTimeType") !== null) this.listHeader();
   }
 
   appendList(id, value) {
