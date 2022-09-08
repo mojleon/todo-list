@@ -11,8 +11,9 @@ export default class eventListeners {
 
   addEventListenerToElement(id, element) {
     element.addEventListener("change", (e) => {
-      if (id.includes("checkbox")) localStorage.setItem(id, e.target.checked);
-      else localStorage.setItem(id, e.target.value);
+      if (id.includes("checkbox"))
+        this.storage.saveCheckbox(id, e.target.checked);
+      else this.storage.saveDate(id, e.target.value);
     });
   }
 
@@ -37,7 +38,7 @@ export default class eventListeners {
         ) {
           localStorage.setItem("projectTimeType", e.target.dataset.type);
           this.storage.clearTaskList();
-          this.list.updateTaskList();
+          this.list.up_dateTaskList();
         }
 
         if (e.target.dataset.type.includes("input"))

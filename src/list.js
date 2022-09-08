@@ -38,7 +38,7 @@ export default class list {
       )
         continue;
 
-      const value = localStorage.getItem(id);
+      const value = JSON.parse(localStorage.getItem(id))?.value;
       this.appendList(id, value);
     }
 
@@ -75,7 +75,7 @@ export default class list {
   }
 
   appendList(id, value) {
-    if (value === null) return;
+    if (value === null || value === undefined) return;
 
     let element = document.createElement("li");
     if (id.includes("task"))
@@ -116,7 +116,7 @@ export default class list {
     const checkbox = document.createElement("input");
     checkbox.setAttribute("type", "checkbox");
     checkbox.setAttribute("id", id + "_checkbox");
-    checkbox.checked = localStorage.getItem(id + "_checkbox") == "true";
+    checkbox.checked = JSON.parse(localStorage.getItem(id)).checkbox == true;
     this.eventListeners.addEventListenerToElement(id + "_checkbox", checkbox);
     return checkbox;
   }
@@ -124,7 +124,7 @@ export default class list {
   createDate(id) {
     const date = document.createElement("input");
     date.setAttribute("type", "date");
-    date.value = localStorage.getItem(id + "_date");
+    date.value = JSON.parse(localStorage.getItem(id)).date;
     this.eventListeners.addEventListenerToElement(id + "_date", date);
     return date;
   }

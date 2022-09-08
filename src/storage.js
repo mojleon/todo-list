@@ -21,7 +21,11 @@ export default class storage {
         `${updateType}${localStorage.getItem(
           `${updateType.slice(0, -1)}Number`
         )}_${localStorage.getItem("projectTimeType")}_${this.date}`,
-        value
+        JSON.stringify({
+          checkbox: null,
+          value: value,
+          date: null,
+        })
       );
     else
       localStorage.setItem(
@@ -48,5 +52,21 @@ export default class storage {
         : 0;
     incrementNumber += 1;
     localStorage.setItem(number, incrementNumber);
+  }
+
+  saveCheckbox(id, value) {
+    id = id.replace("_checkbox", "");
+    let localStorageObject = JSON.parse(localStorage.getItem(id));
+    localStorageObject.checkbox = value;
+    localStorage.setItem(id, JSON.stringify(localStorageObject));
+    console.log(localStorage.getItem(id));
+  }
+
+  saveDate(id, value) {
+    id = id.replace("_date", "");
+    let localStorageObject = JSON.parse(localStorage.getItem(id));
+    localStorageObject.date = value;
+    localStorage.setItem(id, JSON.stringify(localStorageObject));
+    console.log(localStorage.getItem(id));
   }
 }
