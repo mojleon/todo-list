@@ -38,7 +38,7 @@ export default class eventListeners {
         ) {
           localStorage.setItem("projectTimeType", e.target.dataset.type);
           this.storage.clearTaskList();
-          this.list.up_dateTaskList();
+          this.list.updateTaskList();
         }
 
         if (e.target.dataset.type.includes("input"))
