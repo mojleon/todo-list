@@ -1,9 +1,7 @@
 import eventListeners from "./eventListeners";
 import listClass from "./list";
 export default class storage {
-  constructor() {
-    this.date = new Date().toLocaleDateString("en-US");
-  }
+  constructor() {}
 
   clearTaskList() {
     const content = document.querySelector(".content");
@@ -20,7 +18,7 @@ export default class storage {
       localStorage.setItem(
         `${updateType}${localStorage.getItem(
           `${updateType.slice(0, -1)}Number`
-        )}_${localStorage.getItem("projectTimeType")}_${this.date}`,
+        )}_${localStorage.getItem("projectTimeType")}`,
         JSON.stringify({
           checkbox: null,
           value: value,
@@ -59,7 +57,6 @@ export default class storage {
     let localStorageObject = JSON.parse(localStorage.getItem(id));
     localStorageObject.checkbox = value;
     localStorage.setItem(id, JSON.stringify(localStorageObject));
-    console.log(localStorage.getItem(id));
   }
 
   saveDate(id, value) {
@@ -67,6 +64,5 @@ export default class storage {
     let localStorageObject = JSON.parse(localStorage.getItem(id));
     localStorageObject.date = value;
     localStorage.setItem(id, JSON.stringify(localStorageObject));
-    console.log(localStorage.getItem(id));
   }
 }

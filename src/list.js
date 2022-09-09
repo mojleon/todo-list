@@ -15,22 +15,36 @@ export default class list {
       .replace("_", " ");
   }
 
+  getStorageKeys(updateType) {
+    const projectTimeType = localStorage.getItem("projectTimeType");
+    console.log(this.date);
+    console.log(localStorage);
+    if (projectTimeType === "inbox") {
+      return Object.keys(localStorage).filter((item) =>
+        item.includes(updateType)
+      );
+    }
+    if (projectTimeType === "today") {
+      return Object.keys(localStorage).filter((item) => {
+        item.includes(updateType);
+      });
+    }
+    if (projectTimeType === "this_week") {
+      return Object.keys(localStorage).filter((item) =>
+        item.includes(updateType)
+      );
+    }
+  }
+
   updateTaskList() {
     const updateType = "task_";
-    let storageKeys = Object.keys(localStorage).filter((e) =>
-      e.includes(updateType)
-    );
+    let storageKeys = this.getStorageKeys(updateType);
 
+    if (storageKeys === undefined) return;
     this.content = document.querySelector(".content");
 
     for (let i = 0; i <= storageKeys.length; i++) {
-      const id =
-        updateType +
-        i +
-        "_" +
-        localStorage.getItem("projectTimeType") +
-        "_" +
-        this.date;
+      const id = updateType + i + "_" + localStorage.getItem("projectTimeType");
 
       if (
         document.getElementById(id) ||
@@ -54,13 +68,7 @@ export default class list {
     this.content = document.querySelector(".project-content");
 
     for (let i = 0; i <= storageKeys.length; i++) {
-      const id =
-        updateType +
-        i +
-        "_" +
-        localStorage.getItem("projectTimeType") +
-        "_" +
-        this.date;
+      const id = updateType + i + "_" + localStorage.getItem("projectTimeType");
 
       if (
         document.getElementById(id) ||
