@@ -15,24 +15,39 @@ export default class list {
       .replace("_", " ");
   }
 
+  formatDate(date) {
+    if (date === null || date === false || date === undefined) return;
+
+    let dateFormated = date.split("-").reverse();
+    dateFormated = [dateFormated[1], dateFormated[0], dateFormated[2]];
+
+    if (dateFormated.includes("task_")) return;
+
+    return dateFormated
+      .join(",")
+      .replace(/,/g, "/")
+      .replace(/0(?=\d\/)/, "");
+  }
+
   getStorageKeys(updateType) {
     const projectTimeType = localStorage.getItem("projectTimeType");
-    console.log(this.date);
-    console.log(localStorage);
     if (projectTimeType === "inbox") {
-      return Object.keys(localStorage).filter((item) =>
-        item.includes(updateType)
-      );
+      return Object.keys(sessionStorage).filter((item) => item);
     }
     if (projectTimeType === "today") {
-      return Object.keys(localStorage).filter((item) => {
-        item.includes(updateType);
-      });
+      return Object.keys(sessionStorage).filter(
+        (item) =>
+          this.formatDate(JSON.parse(sessionStorage.getItem(item)).date) ===
+            this.date ?? item
+      );
     }
     if (projectTimeType === "this_week") {
-      return Object.keys(localStorage).filter((item) =>
-        item.includes(updateType)
-      );
+      return Object.keys(sessionStorage).filter((item, index) => {
+        const taskDate = new Date(
+          this.formatDate(JSON.parse(sessionStorage.getItem(item)).date)
+        );
+        return item;
+      });
     }
   }
 
@@ -43,18 +58,13 @@ export default class list {
     if (storageKeys === undefined) return;
     this.content = document.querySelector(".content");
 
-    for (let i = 0; i <= storageKeys.length; i++) {
-      const id = updateType + i + "_" + localStorage.getItem("projectTimeType");
+    storageKeys.forEach((id) => {
+      if (document.getElementById(id)) return;
 
-      if (
-        document.getElementById(id) ||
-        document.querySelector(`#` + updateType + i)
-      )
-        continue;
-
-      const value = JSON.parse(localStorage.getItem(id))?.value;
+      const value = JSON.parse(sessionStorage.getItem(id))?.value;
+      console.log(id, value);
       this.appendList(id, value);
-    }
+    });
 
     if (localStorage.getItem("projectTimeType") !== null) this.listHeader();
   }
@@ -68,7 +78,7 @@ export default class list {
     this.content = document.querySelector(".project-content");
 
     for (let i = 0; i <= storageKeys.length; i++) {
-      const id = updateType + i + "_" + localStorage.getItem("projectTimeType");
+      const id = updateType + i;
 
       if (
         document.getElementById(id) ||
@@ -124,7 +134,7 @@ export default class list {
     const checkbox = document.createElement("input");
     checkbox.setAttribute("type", "checkbox");
     checkbox.setAttribute("id", id + "_checkbox");
-    checkbox.checked = JSON.parse(localStorage.getItem(id)).checkbox == true;
+    checkbox.checked = JSON.parse(sessionStorage.getItem(id)).checkbox == true;
     this.eventListeners.addEventListenerToElement(id + "_checkbox", checkbox);
     return checkbox;
   }
@@ -132,7 +142,7 @@ export default class list {
   createDate(id) {
     const date = document.createElement("input");
     date.setAttribute("type", "date");
-    date.value = JSON.parse(localStorage.getItem(id)).date;
+    date.value = JSON.parse(sessionStorage.getItem(id)).date;
     this.eventListeners.addEventListenerToElement(id + "_date", date);
     return date;
   }

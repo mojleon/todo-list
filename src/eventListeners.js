@@ -45,8 +45,9 @@ export default class eventListeners {
           this.input.showInput(e.target.dataset.type);
 
         if (e.target.dataset.type === "clear-storage") {
-          localStorage.clear();
+          sessionStorage.clear();
           document.querySelector(".project-content").innerHTML = "";
+          return;
         }
       });
     });

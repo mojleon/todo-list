@@ -19,3 +19,7 @@ defaultSetting.defaultLocalStorage();
 
 let eListeners = new eventListeners();
 eListeners.activateDomButtons();
+
+// console.log(sessionStorage);
+// localStorage.clear();
+// sessionStorage.clear();

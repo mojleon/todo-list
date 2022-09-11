@@ -14,18 +14,18 @@ export default class storage {
     const list = new listClass();
 
     const updateType = type === "add_task" ? "task_" : "project_";
-    if (type === "add_task")
-      localStorage.setItem(
+    if (type === "add_task") {
+      sessionStorage.setItem(
         `${updateType}${localStorage.getItem(
           `${updateType.slice(0, -1)}Number`
-        )}_${localStorage.getItem("projectTimeType")}`,
+        )}`,
         JSON.stringify({
           checkbox: null,
           value: value,
           date: null,
         })
       );
-    else
+    } else
       localStorage.setItem(
         `${updateType}${localStorage.getItem(
           `${updateType.slice(0, -1)}Number`
@@ -54,15 +54,15 @@ export default class storage {
 
   saveCheckbox(id, value) {
     id = id.replace("_checkbox", "");
-    let localStorageObject = JSON.parse(localStorage.getItem(id));
-    localStorageObject.checkbox = value;
-    localStorage.setItem(id, JSON.stringify(localStorageObject));
+    let sessionStorageObject = JSON.parse(sessionStorage.getItem(id));
+    sessionStorageObject.checkbox = value;
+    sessionStorage.setItem(id, JSON.stringify(sessionStorageObject));
   }
 
   saveDate(id, value) {
     id = id.replace("_date", "");
-    let localStorageObject = JSON.parse(localStorage.getItem(id));
-    localStorageObject.date = value;
-    localStorage.setItem(id, JSON.stringify(localStorageObject));
+    let sessionStorageObject = JSON.parse(sessionStorage.getItem(id));
+    sessionStorageObject.date = value;
+    sessionStorage.setItem(id, JSON.stringify(sessionStorageObject));
   }
 }
