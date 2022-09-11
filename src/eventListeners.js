@@ -13,6 +13,7 @@ export default class eventListeners {
     element.addEventListener("change", (e) => {
       if (id.includes("checkbox"))
         this.storage.saveCheckbox(id, e.target.checked);
+      else if (id.includes("input")) this.storage.saveInput(id, e.target.value);
       else this.storage.saveDate(id, e.target.value);
     });
   }

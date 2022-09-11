@@ -135,3 +135,8 @@ footer {
 .project-content {
   padding: 0;
 }
+
+.task-input {
+  width: 100%;
+  border: none;
+}

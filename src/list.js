@@ -106,12 +106,12 @@ export default class list {
   appendTask(id, value, element) {
     const checkbox = this.createCheckbox(id, this.eventListeners);
     const date = this.createDate(id, this.eventListeners);
-    const paragraph = this.createParagraph(id, value);
+    const input = this.createInput(id, value);
 
     element.id = id;
     element.classList.add("task");
     element.appendChild(checkbox);
-    element.appendChild(paragraph);
+    element.appendChild(input);
     element.appendChild(date);
 
     this.content.append(element);
@@ -149,11 +149,13 @@ export default class list {
     return date;
   }
 
-  createParagraph(id, value) {
-    const label = document.createElement("label");
-    label.innerHTML = value;
-    label.setAttribute("for", id + "_checkbox");
-    return label;
+  createInput(id, value) {
+    const input = document.createElement("input");
+    input.value = value;
+    input.setAttribute("id", id + "_input");
+    input.setAttribute("class", "task-input");
+    this.eventListeners.addEventListenerToElement(id + "_input", input);
+    return input;
   }
 
   createIcon(id) {

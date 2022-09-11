@@ -65,4 +65,12 @@ export default class storage {
     sessionStorageObject.date = value;
     sessionStorage.setItem(id, JSON.stringify(sessionStorageObject));
   }
+
+  saveInput(id, value) {
+    id = id.replace("_input", "");
+    let sessionStorageObject = JSON.parse(sessionStorage.getItem(id));
+    sessionStorageObject.value = value;
+    sessionStorage.setItem(id, JSON.stringify(sessionStorageObject));
+    console.log(sessionStorage.getItem(id));
+  }
 }
