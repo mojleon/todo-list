@@ -12,7 +12,6 @@ export default class storage {
 
   addList(value, type) {
     const list = new listClass();
-    console.log(sessionStorage);
 
     const updateType = type === "add_task" ? "task_" : "project_";
     if (type === "add_task") {

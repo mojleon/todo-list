@@ -48,7 +48,7 @@ export default class eventListeners {
         if (e.target.dataset.type === "clear-storage") {
           sessionStorage.clear();
           document.querySelector(".project-content").innerHTML = "";
-          return;
+          document.querySelector("button[data-type='inbox']").click();
         }
       });
     });
