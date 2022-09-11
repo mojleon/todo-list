@@ -33,15 +33,13 @@ export default class list {
     const projectTimeType = localStorage.getItem("projectTimeType");
     if (projectTimeType === "inbox") {
       return Object.keys(sessionStorage).filter((item) => item);
-    }
-    if (projectTimeType === "today") {
+    } else if (projectTimeType === "today") {
       return Object.keys(sessionStorage).filter(
         (item) =>
           this.formatDate(JSON.parse(sessionStorage.getItem(item)).date) ===
             this.date ?? item
       );
-    }
-    if (projectTimeType === "this_week") {
+    } else if (projectTimeType === "this_week") {
       return Object.keys(sessionStorage).filter((item, index) => {
         const getTaskDate = JSON.parse(sessionStorage.getItem(item)).date;
         if (!getTaskDate) return;
@@ -50,6 +48,13 @@ export default class list {
         console.log();
         if (typeTaskDate - new Date(this.date).getTime() + day * 7 >= 0)
           return item;
+      });
+    } else {
+      return Object.keys(sessionStorage).filter((item) => {
+        const getProjectType = JSON.parse(
+          sessionStorage.getItem(item)
+        ).projectType;
+        if (getProjectType === projectTimeType) return item;
       });
     }
   }
