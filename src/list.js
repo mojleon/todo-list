@@ -43,10 +43,13 @@ export default class list {
     }
     if (projectTimeType === "this_week") {
       return Object.keys(sessionStorage).filter((item, index) => {
-        const taskDate = new Date(
-          this.formatDate(JSON.parse(sessionStorage.getItem(item)).date)
-        );
-        return item;
+        const getTaskDate = JSON.parse(sessionStorage.getItem(item)).date;
+        if (!getTaskDate) return;
+        const day = 86400000; //number of milliseconds in a day
+        const typeTaskDate = new Date(this.formatDate(getTaskDate)).getTime();
+        console.log();
+        if (typeTaskDate - new Date(this.date).getTime() + day * 7 >= 0)
+          return item;
       });
     }
   }
@@ -62,7 +65,6 @@ export default class list {
       if (document.getElementById(id)) return;
 
       const value = JSON.parse(sessionStorage.getItem(id))?.value;
-      console.log(id, value);
       this.appendList(id, value);
     });
 
