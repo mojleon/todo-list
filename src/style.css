@@ -16,6 +16,7 @@ body {
 }
 
 button {
+  border-radius: 12px;
   text-align: left;
   padding: 14px 16px;
   margin: 8px 0;
@@ -47,10 +48,10 @@ li {
 nav {
   display: flex;
   height: 70px;
-  box-shadow: #333 0px 0px 10px;
+  /* box-shadow: #333 0px 0px 10px; */
   gap: 35px;
-  background-color: #333;
-  color: #fff;
+  background-color: white;
+  color: #333;
   padding: calc(20px * 2);
   z-index: 10;
   align-items: center;
@@ -73,7 +74,7 @@ nav img {
   flex-direction: column;
   flex-grow: 1;
   padding: 20px;
-  background-color: #f2f2f2;
+  border-right: #333 1px solid;
 }
 
 .tasks {
@@ -81,7 +82,6 @@ nav img {
 }
 
 footer {
-  background-color: #333;
   color: #fff;
   text-align: center;
   margin-top: auto;
@@ -116,6 +116,7 @@ footer {
 }
 
 .task input[type="date"] {
+  border: none;
   margin-right: 0;
   margin-left: auto;
 }
