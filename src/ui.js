@@ -56,7 +56,7 @@ export default class ui {
 
   footer() {
     const footer = document.createElement("footer");
-    footer.innerHTML = "<p>Footer</p>";
+    footer.innerHTML = `<p>Copyright © 2021 <a href="http://github.com/mojleon/todo-list" target="_blank">Mojleon</a></p>`;
     this.body.appendChild(footer);
   }
 }

@@ -82,10 +82,15 @@ nav img {
 }
 
 footer {
-  color: #fff;
-  text-align: center;
+  padding-left: 20px;
+  color: #333;
+  text-align: left;
   margin-top: auto;
   height: 50px;
+}
+
+footer a {
+  color: #333;
 }
 
 .add-input input {
